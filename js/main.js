@@ -2,7 +2,7 @@
 
 
 //VARIABLES
-const urlApiBase = "https://api.pexels.com/v1/";
+const urlApiBase = "https://api.pexels.com/v1";
 const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 
 
@@ -18,7 +18,7 @@ const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 
 const llamarApi = async (endpoint) => {
     try {
-        const response = await fetch(urlApiBase + endpoint, {
+        const response = await fetch(`${urlApiBase}/${endpoint}`, {
             headers: {
                 "Authorization": keyApi
             }
