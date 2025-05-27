@@ -15,7 +15,6 @@
     background-color: darkslategrey;
     padding: 1em;
     justify-content: space-evenly;
-
 }
 
 .barra-navegacion a {
@@ -51,17 +50,20 @@
     /*alargar*/
 }
 
+.section-imagenes {
+    background-color: aqua;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
 .section-resultados > p {
     text-align: center;
     padding-top: 1em;
 }
 
 .imagen-card {
-    flex-direction: column;
-    align-content: center;
-    gap: 0;
-    background-color: blue;
-    width: 70%;
+    border: 3px solid black;
 }
 
 .btn-paginacion {
