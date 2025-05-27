@@ -2,20 +2,52 @@
 
 
 //VARIABLES
+const urlApiBase = "https://api.pexels.com/v1";
+const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 
 
 //EVENTOS
 
 
 //FUNCIONES
+/**
+ * 
+ * @param {String} endpoint Son las palabras claves, o los filtros de búsqueda que se quieren aplicar en la API.
+ * @returns {Object} Es la coleccion de imágenes que cumplen con las característica de la llamada realizada.
+ */
 
-const llamarApi = () => {
-    // Solicitud a la api con fetch (header autorizacion)
-    // Recoger objeto json
-    // try (devuelve todobien) catch (devuelve error) --> se pasa a pintar en evento
+const llamarApi = async (endpoint) => {
+    try {
+        const response = await fetch(`${urlApiBase}/${endpoint}`, {
+            headers: {
+                "Authorization": keyApi
+            }
+        });
+        let data;
+        if (response.ok) {
+            data = await response.json();
+            return data;
+        } else {
+            throw ("Error con la data");
+        }
+
+    } catch (error) {
+        throw error
+    }
 }
 
+llamarApi("search?query=people");
+
 const validacion = () => {
+    // const RegExp = / /[a-zA-ZÀ-ÿ\s]//;
+    //const imagen = (photoinput.valu);
+    // var mifotos;
+    /* if (imagen.search(RegExp) != -1) {
+      mifotos= " contains ";
+    } else {
+      mifotos = " does not contain ";
+    }
+    console.log(imagen + midstring + RegExp); */
     //validar palabra introducida por input(con regular expresions)
     //Letras mayúsculas, mínusculas, tíldes.
 }
@@ -23,6 +55,7 @@ const validacion = () => {
 
 
 const filtrarBusqueda = () => {
+
     //Llamamos a funcion validar, le pasamos la palabra, si es correcta, agregamos esa palabra en la URL de la api. Llamaríamos a funcion pintarFotos.
 }
 
