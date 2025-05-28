@@ -7,7 +7,16 @@ const fragment = document.createDocumentFragment();
 const urlApiBase = "https://api.pexels.com/v1";
 const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 
+// let objImagen;
+// let paginaFoto;
+// let arrayImagenes = [];
+
 //EVENTOS
+/*
+    eventoCategoria -getDataApi(categoria)
+
+    paginaLocal - getLocal
+*/
 
 //FUNCIONES
 /**
@@ -26,6 +35,8 @@ const llamarApi = async (endpoint) => {
         let data;
         if (response.ok) {
             data = await response.json();
+            // arrayImagenes.push(data.photos);
+            // paginaFoto = data.page;
             return data;
         } else {
             throw ("Error con la data");
@@ -36,13 +47,17 @@ const llamarApi = async (endpoint) => {
     }
 }
 
-const pintarFotos = async () => {
+
+const pintarFotos = (data, page, localStorage = false) => {
     try {
 
-        const data = await llamarApi("search?query=people");
+        // const data = await llamarApi("search?query=people");
+        // console.log({ data });
+
+        // data=getStorage
         console.log(data);
 
-        data.photos.forEach(element => {
+        data.forEach(element => {
             const articleImagen = document.createElement("ARTICLE");
             articleImagen.classList.add("imagen-card");
 
@@ -55,15 +70,22 @@ const pintarFotos = async () => {
 
             const parrafoAutor = document.createElement("P");
             parrafoAutor.textContent = element.photographer;
+            const btnFavoritos = document.createElement("BUTTON");
 
-            const btnFavoritosAdd = document.createElement("BUTTON");
-            btnFavoritosAdd.classList.add("btnFavoritosAdd");
-            btnFavoritosAdd.textContent = "Agregar a favoritos";
+            if (!localStorage) {
+                btnFavoritos.classList.add("btnFavoritosAdd");
+                btnFavoritos.textContent = "Agregar a favoritos";
+            } else {
+
+                btnFavoritos.classList.add("btnFavoritosRemove");
+                btnFavoritos.textContent = "Eliminar de favoritos";
+            }
+
 
             imgContainer.append(imagen);
             articleImagen.append(imgContainer);
             articleImagen.append(parrafoAutor);
-            articleImagen.append(btnFavoritosAdd);
+            articleImagen.append(btnFavoritos);
             fragment.append(articleImagen);
 
 
@@ -79,7 +101,7 @@ const pintarFotos = async () => {
 
         const paginaActualBtn = document.createElement("BUTTON");
         paginaActualBtn.setAttribute("id", "currentPage");
-        paginaActualBtn.textContent = data.page;
+        paginaActualBtn.textContent = page;
 
         const nextPagBtn = document.createElement("BUTTON");
         nextPagBtn.setAttribute("id", "prevPage");
@@ -135,7 +157,25 @@ const eliminarFotoFavoritos = () => {
     // Modificar array, si el id de la foto coincide con el id del botón eliminar, se filtra y no se añade
 }
 
+const getData = async (categoria, orientation = null) => {
+    const { photos, page } = await llamarApi(`search?query=${categoria}&orientation=${orientation}`);
+
+    pintarFotos(photos, page)
+}
+/*
+getdataLocal => (){
+    const data = llamar local
+
+    pintarFotos(data)
+}
+*/
+
 //INVOCAR FUNCIONES
 
 // llamarApi("search?query=people");
+// pintarFotos();
+llamarApi("search?query=people");
+getData("nature");
 pintarFotos();
+// console.log(arrayImagenes);
+// console.log(paginaFoto);

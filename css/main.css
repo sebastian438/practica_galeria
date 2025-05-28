@@ -22,7 +22,7 @@
 }
 
 .btn-article {
-    background-color: aqua;
+    background-color: white;
     flex-direction: column;
     align-content: center;
     padding-top: 5%;
@@ -50,7 +50,7 @@
 }
 
 .section-imagenes {
-    background-color: aqua;
+    background-color: white;
     justify-content: center;
     align-content: center;
     flex-direction: column;
