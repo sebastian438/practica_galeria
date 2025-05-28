@@ -5,16 +5,20 @@ const sectionImagenes = document.querySelector('#sectionImagenes');
 const urlApiBase = "https://api.pexels.com/v1";
 const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 let listaFotos;
+// Para probar
 
+const botonPrueba = document.querySelector('.btnFavoritosAdd');
+botonPrueba.id = '2014422';
 
 //EVENTOS
 
 sectionImagenes.addEventListener('click', (ev) => {
-    const imagen = {id:12345}; // Prueba
+    
+    // Pasar url id con otra llamada a api
+    // o acceder al elemento padre y recoger la información de ahí parentElement, querySelector.value, crear objeto con el valor ese
     if (ev.target.matches('.btnFavoritosAdd')) {
-        // obtener objeto de la imagen asociada al botón añadir a favoritos
-        // crear función en pintarFoto que guarde el objeto?
-        aniadirAFavoritos(imagen)
+        const id = ev.target.id;
+        buscarIdFavoritos(id);
         console.log('Entra en evento');
     }
 })
@@ -94,9 +98,14 @@ const setLocal = (imagenes) => {
     localStorage.setItem('listaFotos', JSON.stringify(imagenes));
 }
 
+const buscarIdFavoritos = async (id) => {
+    const imagen = await llamarApi(`photos/${id}`);
+    console.log(imagen)
+    aniadirAFavoritos(imagen);
+}
+
 const aniadirAFavoritos = (imagen) => {
     const arrayFavoritos = getLocal();
-    console.log(arrayFavoritos);
     setLocal([...arrayFavoritos, imagen])
     //Capturar la URL de la foto seleccionada. Guardar en LocalStorage. 
 }
