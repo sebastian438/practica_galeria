@@ -10,6 +10,7 @@ let listaFotos;
 //EVENTOS
 
 sectionImagenes.addEventListener('click', (ev) => {
+    const imagen = {id:12345}; // Prueba
     if (ev.target.matches('.btnFavoritosAdd')) {
         // obtener objeto de la imagen asociada al botón añadir a favoritos
         // crear función en pintarFoto que guarde el objeto?
@@ -95,6 +96,7 @@ const setLocal = (imagenes) => {
 
 const aniadirAFavoritos = (imagen) => {
     const arrayFavoritos = getLocal();
+    console.log(arrayFavoritos);
     setLocal([...arrayFavoritos, imagen])
     //Capturar la URL de la foto seleccionada. Guardar en LocalStorage. 
 }
