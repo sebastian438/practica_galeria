@@ -10,7 +10,7 @@
 
 <body>
     <header class="barra-navegacion display-flex">
-        <form action="busquedaPalabra" method="post">
+        <form action="busquedaPalabra" method="post" id="btnBusqueda">
             <input type="text" id="palabra" name="palabra" placeholder="Busca una imagen">
             <button id="buscar">Buscar</button>
         </form>
@@ -19,9 +19,18 @@
     <main>
         <section id="sectionBotones">
             <article class="btn-article display-flex">
-                <button id="idNaturaleza">Naturaleza</button>
-                <button id="idTecnologia">Tecnologia</button>
-                <button id="idPersonas">Personas</button>
+                <div>
+                    <img id="idNaturaleza" src="" alt="nature">
+                    <h3>Naturaleza</h3>
+                </div>
+                <div>
+                    <img id="idTecnologia" src="" alt="technology">
+                    <h3>Tecnologia</h3>
+                </div>
+                <div>
+                    <img id="idPersonas" src="" alt="people">
+                    <h3>Personas</h3>
+                </div>
             </article>
         </section>
         <section class="orientacion-section">
