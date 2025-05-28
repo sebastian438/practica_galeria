@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Práctica Galería</title>
+</head>
+
+<body>
+    <header class="barra-navegacion display-flex">
+        <form action="busquedaPalabra" method="post" id="btnBusqueda">
+            <input type="text" id="palabra" name="palabra" placeholder="Busca una imagen">
+            <button id="buscar">Buscar</button> 
+        </form>
+        <a href="pages/favoritos.html">Favoritos</a>
+    </header>
+    <main>
+        <section id="sectionBotones">
+            <article class="btn-article display-flex">
+                <button id="idNaturaleza">Naturaleza</button>
+                <button id="idTecnologia">Tecnologia</button>
+                <button id="idPersonas">Personas</button>
+            </article>
+        </section>
+        <section class="orientacion-section">
+            <div class="orientacion-container display-flex">
+                <label for="orientacion"></label>
+                <select id="orientacion" name="orientacion">
+                    <option value="todos">Todos</option>
+                    <option value="horizontal">Horizontal</option>
+                    <option value="vertical">Vertical</option>
+                </select>
+            </div>
+        </section>
+        <section class="section-resultados">
+            <p>No se han encontrado fotos.</p>
+            <section class="section-imagenes display-flex">
+                <article id="imagenCard" class="imagen-card">
+                    <div class="imgContainer">
+                        <img src="viajes-1.jpg" alt="">
+                    </div>
+                    <p>Autor</p>
+                    <button id="btnFavoritos">Agregar a favoritos</button>
+                </article>
+                <article id="imagenCard" class="imagen-card">
+                    <div class="imgContainer">
+                        <img src="viajes-1.jpg" alt="">
+                    </div>
+                    <p>Autor</p>
+                    <button id="btnFavoritos">Agregar a favoritos</button>
+                </article>
+            </section>
+            
+            <article class="btn-paginacion display-flex">
+                <button id="prevPage"><<</button>
+                <button id="currentPage">1</button>
+                <button id="nextPage">>></button>
+            </article>
+        </section>
+    </main>
+
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
