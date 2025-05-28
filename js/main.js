@@ -16,7 +16,7 @@ let listaFotos;
 */
 
 sectionImagenes.addEventListener('click', (ev) => {
-    
+
     // Pasar url id con otra llamada a api
     // o acceder al elemento padre y recoger la información de ahí parentElement, querySelector.value, crear objeto con el valor ese
     if (ev.target.matches('.btnFavoritosAdd')) {
@@ -136,8 +136,9 @@ const pintarFotos = (data, page, localStorage = false) => {
 
         sectionResultados.append(parrafoErrorImage);
 
-    //Acceder al DOM, crear los elementos, acceder a la URL de las fotos y pintarlas 
-    // Enlazar botones con prev_page y next_page
+        //Acceder al DOM, crear los elementos, acceder a la URL de las fotos y pintarlas 
+        // Enlazar botones con prev_page y next_page
+    }
 }
 
 const validacion = (valida) => {
@@ -168,7 +169,7 @@ const buscarIdFavoritos = async (id) => {
 const aniadirAFavoritos = (imagen) => {
     const arrayFavoritos = getLocal();
     setLocal([...arrayFavoritos, imagen])
-  
+
     //Capturar la URL de la foto seleccionada. Guardar en LocalStorage. 
 }
 
@@ -210,12 +211,12 @@ const idPersonas = document.querySelector("#idPersonas");
 
 sectionBotones.addEventListener("click", (ev) => {
     const categoriaSelecion = ev.target.alt;
-    console.log(`Crear imagenes de ${ev.target.alt}`);  
+    console.log(`Crear imagenes de ${ev.target.alt}`);
 });
 
 //funcion buscar url de imagen relacionada llamarApi.
 
-const imagenBoton = async (item) => { 
+const imagenBoton = async (item) => {
     try {
         const imagen = await llamarApi(`search?query=${item.alt}&&per_page=1`);
         const imgClick = imagen.photos[0].src.small;
