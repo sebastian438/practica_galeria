@@ -12,7 +12,7 @@
     <header class="barra-navegacion display-flex">
         <form action="busquedaPalabra" method="post" id="btnBusqueda">
             <input type="text" id="palabra" name="palabra" placeholder="Busca una imagen">
-            <button id="buscar">Buscar</button> 
+            <button id="buscar">Buscar</button>
         </form>
         <a href="pages/favoritos.html">Favoritos</a>
     </header>
@@ -43,30 +43,31 @@
                 </select>
             </div>
         </section>
-        <section class="section-resultados">
-            <p>No se han encontrado fotos.</p>
-            <section class="section-imagenes display-flex">
-                <article id="imagenCard" class="imagen-card">
+        <section id="section-resultados" class="section-resultados">
+            <!-- <p id="parrafo-error-imagen">No se han encontrado fotos.</p> -->
+            <section id="section-imagenes" class="section-imagenes display-flex">
+                <!-- <article id="imagenCard" class="imagen-card">
                     <div class="imgContainer">
                         <img src="viajes-1.jpg" alt="">
                     </div>
                     <p>Autor</p>
-                    <button id="btnFavoritos">Agregar a favoritos</button>
+                    <button class="btnFavoritos">Agregar a favoritos</button>
                 </article>
                 <article id="imagenCard" class="imagen-card">
                     <div class="imgContainer">
                         <img src="viajes-1.jpg" alt="">
                     </div>
-                    <p>Autor</p>
-                    <button id="btnFavoritos">Agregar a favoritos</button>
-                </article>
+                    <p class="parrafo-autor">Autor</p>
+                    <button class="btnFavoritosAdd">Agregar a favoritos</button>
+                </article> -->
             </section>
-            
-            <article class="btn-paginacion display-flex">
-                <button id="prevPage"><<</button>
-                <button id="currentPage">1</button>
-                <button id="nextPage">>></button>
-            </article>
+
+            <!-- <article class="btn-paginacion display-flex">
+                <button id="prevPage">
+                    << </button>
+                        <button id="currentPage">1</button>
+                        <button id="nextPage">>></button>
+            </article> -->
         </section>
     </main>
 

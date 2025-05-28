@@ -1,11 +1,10 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.display-flex{
+.display-flex {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
@@ -23,7 +22,7 @@
 }
 
 .btn-article {
-    background-color: aqua;
+    background-color: white;
     flex-direction: column;
     align-content: center;
     padding-top: 5%;
@@ -39,7 +38,7 @@
     background-color: blanchedalmond;
     padding-top: 1em;
     padding-bottom: 1em;
-    
+
 }
 
 .orientacion-container {
@@ -51,13 +50,13 @@
 }
 
 .section-imagenes {
-    background-color: aqua;
+    background-color: white;
     justify-content: center;
     align-content: center;
     flex-direction: column;
 }
 
-.section-resultados > p {
+.section-resultados>p {
     text-align: center;
     padding-top: 1em;
 }
@@ -104,6 +103,8 @@
     .tres-columnas {
         width: calc(33% - 20px);
     }
-    
 
-}/*  992px */
+
+}
+
+/*  992px */
