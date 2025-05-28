@@ -1,13 +1,35 @@
 //LLAMAR ELEMENTOS DEL DOM
-
+const sectionImagenes = document.querySelector('#sectionImagenes');
 
 //VARIABLES
 const urlApiBase = "https://api.pexels.com/v1";
 const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
+let listaFotos;
+// Para probar
 
+const botonPrueba = document.querySelector('.btnFavoritosAdd');
+botonPrueba.id = '2014422';
 
 //EVENTOS
 
+sectionImagenes.addEventListener('click', (ev) => {
+    
+    // Pasar url id con otra llamada a api
+    // o acceder al elemento padre y recoger la información de ahí parentElement, querySelector.value, crear objeto con el valor ese
+    if (ev.target.matches('.btnFavoritosAdd')) {
+        const id = ev.target.id;
+        buscarIdFavoritos(id);
+        console.log('Entra en evento');
+    }
+})
+
+sectionImagenes.addEventListener('click', (ev) => {
+    if (ev.target.matches('.btnEliminar')) {
+        // Obtener id del objeto/botón
+        eliminarFotoFavoritos()
+        console.log('Entra evento eliminar');
+    }
+})
 
 
 //FUNCIONES
@@ -66,12 +88,33 @@ const filtrarOrientacion = () => {
     //Llamamos a funcion Api, le pasamos la URL con la orientación seleccionada. Llamamos a funcion pintarFotos.
 }
 
+/**
+ * Guarda el array de las imágenes en localStorage
+ * @param {Array} imagenes 
+ * @returns 
+ */
+const setLocal = (imagenes) => {
+    if (!imagenes) return;
 
-const aniadirAfavoritos = () => {
+    // localStorage.setItem('listaFotos', JSON.stringify([...array, imagenes]));
+    localStorage.setItem('listaFotos', JSON.stringify(imagenes));
+}
+
+const buscarIdFavoritos = async (id) => {
+    const imagen = await llamarApi(`photos/${id}`);
+    console.log(imagen)
+    aniadirAFavoritos(imagen);
+}
+
+const aniadirAFavoritos = (imagen) => {
+    const arrayFavoritos = getLocal();
+    setLocal([...arrayFavoritos, imagen])
     //Capturar la URL de la foto seleccionada. Guardar en LocalStorage. 
 }
 
-const getFavoritos = () => {
+const getLocal = () => {
+    listaFotos = JSON.parse(localStorage.getItem('listaFotos')) || [];
+    return listaFotos;
     //Recogemos fotos guardadas en localStorage. 
 }
 
@@ -80,8 +123,11 @@ const pintarFotosFavoritos = () => {
     // pintar foto + botón eliminar
 }
 
-const eliminarFoto = () => {
-    // Modificar array, si el id de la foto coincide con el id del botón eliminar, se filtra y no se añade
+const eliminarFotoFavoritos = (id) => {
+    const arrayFotos = getLocal();
+    const fotosActualizadas = arrayFotos.filter((foto) => id !== foto.id);
+    localStorage.setItem('listaFotos', JSON.stringify(fotosActualizadas));
+    // Modificar array, si el id de la foto coincide con el id del botón eliminar, se filtra y no se añade, mantener el resto
 }
 
 const pintarFotos = () => {
