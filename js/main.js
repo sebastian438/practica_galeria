@@ -1,4 +1,5 @@
 //LLAMAR ELEMENTOS DEL DOM
+const btnBusqueda = document.querySelector("btnbusqueda")
 
 
 //VARIABLES
@@ -38,16 +39,16 @@ const llamarApi = async (endpoint) => {
 
 llamarApi("search?query=people");
 
-const validacion = () => {
-    // const RegExp = / /[a-zA-ZÀ-ÿ\s]//;
-    //const imagen = (photoinput.valu);
-    // var mifotos;
-    /* if (imagen.search(RegExp) != -1) {
-      mifotos= " contains ";
-    } else {
-      mifotos = " does not contain ";
-    }
-    console.log(imagen + midstring + RegExp); */
+
+/**
+ * 
+ * @param {*} valida 
+ * @returns 
+ */
+const validacion = (imagen) => {
+
+        const regExp = /^[a-zA-Z\s]{3,}$/;
+        return regExp.test(imagen);
     //validar palabra introducida por input(con regular expresions)
     //Letras mayúsculas, mínusculas, tíldes.
 }
@@ -55,6 +56,18 @@ const validacion = () => {
 
 
 const filtrarBusqueda = () => {
+    btnBusqueda.addEventListener("submit" ,(Event) => {
+        Event.preventDefault();
+        const imagen = Event.target.imagen.value // llamarApi
+        const noesImagen = document.getElementById("error")
+        if (validacion(imagen)) {
+
+
+        }else {
+          noesImagen.textContent=`escribi un nombre de imagen`
+        }
+    })
+
 
     //Llamamos a funcion validar, le pasamos la palabra, si es correcta, agregamos esa palabra en la URL de la api. Llamaríamos a funcion pintarFotos.
 }
