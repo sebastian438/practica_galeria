@@ -107,46 +107,32 @@ const idTecnologia = document.querySelector("#idTecnologia");
 const idPersonas = document.querySelector("#idPersonas");
 
 //evento esto es para su uso despues .
-sectionBotones.addEventListener("click", (ev) => {
 
+sectionBotones.addEventListener("click", (ev) => {
+    const categoriaSelecion = ev.target.alt;
+    console.log(`Crear imagenes de ${ev.target.alt}`);  
 });
 
 //funcion buscar url de imagen relacionada llamarApi.
 
-const imgenesNaturaleza = async () => await llamarApi("search?query=nature");
-const dataNaturaleza = async () => await imgenesNaturaleza.json();
-const imgenesTecnologia = llamarApi("search?query=technology");
-const imgenesPersonas = llamarApi("search?query=people");
-////////////////////////////////////////
-// import { createClient } from 'https://api.pexels.com/v1';
+const imagenBoton = async (item) => { 
+    try {
+        const imagen = await llamarApi(`search?query=${item.alt}&&per_page=1`);
+        const imgClick = imagen.photos[0].src.small;
+        console.log(imagen);
+        item.src = imgClick;
+    } catch (error) {
+        console.error("Error obteniendo imagen:", error);
+        return null;
+    }
+};
 
-// const client = createClient("Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc");
-// const query = 'Nature';
-
-// const uno = client.photos.search({ query, per_page: 1 }).then(photos => {...});
-// console.log(uno);
-///////////////////////////////////
-console.log(imgenesNaturaleza);
-console.log(dataNaturaleza);
-console.log(imgenesTecnologia);
-console.log(imgenesPersonas);
+imagenBoton(idNaturaleza);
+imagenBoton(idTecnologia);
+imagenBoton(idPersonas);
 
 
 
-
-// const imagenBoton = async () => {
-//     try {
-//         const imagen = await llamarApi("search?query=nature");
-//         return imagen;
-//     } catch (error) {
-//         console.error("Error obteniendo imagen:", error);
-//         return null;
-//     }
-// };
-// console.log(imagenBoton);
-
-
-//pintar imagen en la
 
 
 
