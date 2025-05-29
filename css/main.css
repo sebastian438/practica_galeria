@@ -14,6 +14,8 @@
     background-color: darkslategrey;
     padding: 1em;
     justify-content: space-evenly;
+    position: sticky;
+    top: 0;
 }
 
 .barra-navegacion a {
@@ -22,7 +24,6 @@
 }
 
 .btn-article {
-    background-color: white;
     flex-direction: column;
     align-content: center;
     padding-top: 5%;
@@ -35,18 +36,14 @@
 }
 
 .orientacion-section {
-    background-color: blanchedalmond;
+    background-color: darkslategrey;
     padding-top: 1em;
     padding-bottom: 1em;
-
+    margin-bottom: 1em;
 }
 
 .orientacion-container {
     justify-content: center;
-}
-
-#orientacion {
-    /*alargar*/
 }
 
 .section-imagenes {
@@ -61,33 +58,16 @@
     padding-top: 1em;
 }
 
-.imagen-card {
-    border: 3px solid black;
-}
-
 .btn-paginacion {
     justify-content: center;
 }
 
-
-
-
-/*
----------------------------------------------------------------
-
-///////////////////////////   768 PX
-
----------------------------------------------------------------
-*/
-
-@media screen and (min-width: 768px) {
-
-    .dos-columnas {
-        width: calc(50% - 20px);
-    }
+.btnFavoritosAdd {
+    border: 1px solid black;
+    padding: 0.5em;
+    margin-top: 0.5em;
 }
 
-/*  768px */
 
 
 /*
@@ -100,11 +80,12 @@
 
 @media screen and (min-width: 992px) {
 
-    .tres-columnas {
-        width: calc(33% - 20px);
+    .btn-article {
+        flex-direction: row;
+        justify-content: center;
     }
 
-
+    .section-imagenes {
+        flex-direction: row;
+    }
 }
-
-/*  992px */

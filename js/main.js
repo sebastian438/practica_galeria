@@ -1,43 +1,72 @@
 //LLAMAR ELEMENTOS DEL DOM
-const sectionResultados = document.querySelector("#section-resultados");
-const sectionImagenes = document.querySelector("#section-imagenes");
+const sectionResultados = document.querySelector(".section-resultados");
+const sectionImagenes = document.querySelector(".section-imagenes");
 const fragment = document.createDocumentFragment();
+const sectionBotones = document.querySelector("#sectionBotones");
+const idNaturaleza = document.querySelector("#idNaturaleza");
+const idTecnologia = document.querySelector("#idTecnologia");
+const idPersonas = document.querySelector("#idPersonas");
+const btnBusqueda = document.querySelector("#btnBusqueda");
+const boxBtnPaginacion = document.querySelector("#boxBtnPaginacion");
+
 
 //VARIABLES
 const urlApiBase = "https://api.pexels.com/v1";
 const keyApi = "Oh6U5BGqs7r2Tfa2fTErGZUPAZA0XeC6z1iNLtx6Aiq1S9GiWJ3F8fpc";
 let listaFotos;
 
+
 //EVENTOS
-/*
-    eventoCategoria -getDataApi(categoria)
+/**
+ * Eventos 
+ */
 
-    paginaLocal - getLocal
-*/
+document.addEventListener("click", (ev) => {
+    if (ev.target.matches("#sectionBotones img")) {
+        const categoriaSeleccion = ev.target.alt;
+        getData(categoriaSeleccion);
+    }
 
-sectionImagenes.addEventListener('click', (ev) => {
-
-    // Pasar url id con otra llamada a api
-    // o acceder al elemento padre y recoger la información de ahí parentElement, querySelector.value, crear objeto con el valor ese
     if (ev.target.matches('.btnFavoritosAdd')) {
         const id = ev.target.id;
         buscarIdFavoritos(id);
-        console.log('Entra en evento');
+    }
+
+    if (ev.target.matches('.btnFavoritosRemove')) {
+        const id = ev.target.id;
+        eliminarFotoFavoritos(id);
+    }
+});
+
+
+/**
+ * TODO: Filtrar por orientación
+ */
+
+document.addEventListener("change", (ev) => {
+    if (ev.target.matches("#orientacion")) {
+        getData();
     }
 })
 
-sectionImagenes.addEventListener('click', (ev) => {
-    if (ev.target.matches('.btnEliminar')) {
-        // Obtener id del objeto/botón
-        eliminarFotoFavoritos()
-        console.log('Entra evento eliminar');
+
+/**
+ * Evento para filtrar por búsqueda.
+*/
+
+btnBusqueda.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const entrada = ev.target.palabra.value;
+    if (validacion(entrada)) {
+        getData(entrada);
     }
 })
 
 
 //FUNCIONES
+
 /**
- * 
+ * Función que llama a la API
  * @param {String} endpoint Son las palabras claves, o los filtros de búsqueda que se quieren aplicar en la API.
  * @returns {Object} Es la coleccion de imágenes que cumplen con las característica de la llamada realizada.
  */
@@ -64,15 +93,19 @@ const llamarApi = async (endpoint) => {
     }
 }
 
+
+/**
+ * Función para pintar las fotos
+ * @param {Array} data Array que se utiliza para pintar las imágenes
+ * @param {Number} page Número de página
+ * @param {Boolean} localStorage Indica si los datos se recogen desde el localStorage o no
+ */
+
 const pintarFotos = (data, page, localStorage = false) => {
+    sectionImagenes.innerHTML = "";
+    boxBtnPaginacion.innerHTML = "";
+
     try {
-
-        // const data = await llamarApi("search?query=people");
-        // console.log({ data });
-
-        // data=getStorage
-        console.log(data);
-
         data.forEach(element => {
             const articleImagen = document.createElement("ARTICLE");
             articleImagen.classList.add("imagen-card");
@@ -91,25 +124,19 @@ const pintarFotos = (data, page, localStorage = false) => {
             if (!localStorage) {
                 btnFavoritos.classList.add("btnFavoritosAdd");
                 btnFavoritos.textContent = "Agregar a favoritos";
+                btnFavoritos.id = element.id;
             } else {
-
                 btnFavoritos.classList.add("btnFavoritosRemove");
                 btnFavoritos.textContent = "Eliminar de favoritos";
+                btnFavoritos.id = element.id;
             }
-
-
             imgContainer.append(imagen);
             articleImagen.append(imgContainer);
             articleImagen.append(parrafoAutor);
             articleImagen.append(btnFavoritos);
             fragment.append(articleImagen);
-
-
         });
         sectionImagenes.append(fragment);
-        const boxBtnPaginacion = document.createElement("ARTICLE");
-        boxBtnPaginacion.classList.add("btn-paginacion");
-        boxBtnPaginacion.classList.add("display-flex");
 
         const prevPagBtn = document.createElement("BUTTON");
         prevPagBtn.setAttribute("id", "prevPage");
@@ -123,104 +150,119 @@ const pintarFotos = (data, page, localStorage = false) => {
         nextPagBtn.setAttribute("id", "prevPage");
         nextPagBtn.textContent = ">>";
 
-        boxBtnPaginacion.append(prevPagBtn);
-        boxBtnPaginacion.append(paginaActualBtn);
-        boxBtnPaginacion.append(nextPagBtn);
-        fragment.append(boxBtnPaginacion);
-        sectionResultados.append(fragment);
-
+        fragment.append(prevPagBtn);
+        fragment.append(paginaActualBtn);
+        fragment.append(nextPagBtn);
+        boxBtnPaginacion.append(fragment);
 
     } catch (error) {
         const parrafoErrorImage = document.createElement("P");
         parrafoErrorImage.textContent = error;
 
         sectionResultados.append(parrafoErrorImage);
-
-        //Acceder al DOM, crear los elementos, acceder a la URL de las fotos y pintarlas 
-        // Enlazar botones con prev_page y next_page
     }
 }
+
+
+/**
+ * Función para validar la entrada del campo de búsqueda
+ */
 
 const validacion = (valida) => {
     const regExp = /^[a-zA-Z\s]{3,}$/;
     return regExp.test(valida);
-    //validar palabra introducida por input(con regular expresions)
-    //Letras mayúsculas, mínusculas, tíldes.
 }
+
 
 /**
  * Guarda el array de las imágenes en localStorage
  * @param {Array} imagenes 
- * @returns 
  */
+
 const setLocal = (imagenes) => {
     if (!imagenes) return;
 
-    // localStorage.setItem('listaFotos', JSON.stringify([...array, imagenes]));
     localStorage.setItem('listaFotos', JSON.stringify(imagenes));
 }
 
+
+/**
+ * Función para recoger el objeto de la imagen desde su id
+ */
+
 const buscarIdFavoritos = async (id) => {
     const imagen = await llamarApi(`photos/${id}`);
-    console.log(imagen)
     aniadirAFavoritos(imagen);
 }
 
+
+/**
+ * Función para añadir el objeto de la imagen a favoritos
+ * Busca si la imagen ya está guardada en localStorage, si no lo está, la añade al array
+ */
+
 const aniadirAFavoritos = (imagen) => {
     const arrayFavoritos = getLocal();
-    setLocal([...arrayFavoritos, imagen])
-
-    //Capturar la URL de la foto seleccionada. Guardar en LocalStorage. 
+    const verificarExiste = arrayFavoritos.find((foto) => foto.id === imagen.id);
+    if (!verificarExiste) {
+        setLocal([...arrayFavoritos, imagen]);
+    } else {
+        return;
+    }
 }
+
+
+/**
+ * Función para capturar el array almacenado en localStorage
+ */
 
 const getLocal = () => {
     listaFotos = JSON.parse(localStorage.getItem('listaFotos')) || [];
     return listaFotos;
-    //Recogemos fotos guardadas en localStorage. 
 }
+
+
+/**
+ * Función para eliminar las fotos de favoritos
+ */
 
 const eliminarFotoFavoritos = (id) => {
     const arrayFotos = getLocal();
     const fotosActualizadas = arrayFotos.filter((foto) => id !== foto.id);
-    localStorage.setItem('listaFotos', JSON.stringify(fotosActualizadas));
-    // Modificar array, si el id de la foto coincide con el id del botón eliminar, se filtra y no se añade, mantener el resto
+    setLocal(fotosActualizadas);
 }
+
+
+/**
+ * Función que llama a la api para recoger el array de las imágenes
+ * Una vez obtenido el objeto, llama a la función de pintarFotos()
+ */
 
 const getData = async (categoria, orientation = null) => {
     const { photos, page } = await llamarApi(`search?query=${categoria}&orientation=${orientation}`);
-
-    pintarFotos(photos, page)
+    pintarFotos(photos, page);
 }
-/*
-getdataLocal => (){
-    const data = llamar local
 
-    pintarFotos(data)
+
+/**
+ * Función que captura el array de las imágenes del localStorage y llama a pintarFotos con los datos obtenidos
+ */
+
+const getDataLocal = () => {
+    const data = getLocal();
+    pintarFotos(data, null, localStorage = true);
 }
-*/
 
-/////FUNCION CREAR IMAGENES PARA LOS BOTONES NATURALEZA, TECNO Y PERSONAS.
 
-//crear los selectores necesarios
-const sectionBotones = document.querySelector("#sectionBotones");
-const idNaturaleza = document.querySelector("#idNaturaleza");
-const idTecnologia = document.querySelector("#idTecnologia");
-const idPersonas = document.querySelector("#idPersonas");
-
-//evento esto es para su uso despues .
-
-sectionBotones.addEventListener("click", (ev) => {
-    const categoriaSelecion = ev.target.alt;
-    console.log(`Crear imagenes de ${ev.target.alt}`);
-});
-
-//funcion buscar url de imagen relacionada llamarApi.
+/**
+ * Funcion para buscar url de imagen relacionada llamarApi.
+ * Devuelva un solo objeto, obtenemos la url de la imagen y pinta.
+ */
 
 const imagenBoton = async (item) => {
     try {
-        const imagen = await llamarApi(`search?query=${item.alt}&&per_page=1`);
+        const imagen = await llamarApi(`search?query=${item.alt}&per_page=1`);
         const imgClick = imagen.photos[0].src.small;
-        console.log(imagen);
         item.src = imgClick;
     } catch (error) {
         console.error("Error obteniendo imagen:", error);
@@ -228,8 +270,20 @@ const imagenBoton = async (item) => {
     }
 };
 
-imagenBoton(idNaturaleza);
-imagenBoton(idTecnologia);
-imagenBoton(idPersonas);
 
-//INVOCAR FUNCIONES
+/**
+ * Función para saber en qué página nos encontramos
+ */
+
+const init = () => {
+    if (location.pathname === '/pages/favoritos.html') {
+        getDataLocal()
+    } else if (location.pathname === '/' || location.pathname === '/index.html') {
+        imagenBoton(idNaturaleza);
+        imagenBoton(idTecnologia);
+        imagenBoton(idPersonas);
+    }
+}
+
+init()
+
